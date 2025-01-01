@@ -1,5 +1,7 @@
 import sys
-sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+# sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
+
 from Blockchain.Backend.core.EllepticCurve.EllepticCurve import Sha256Point
 from Blockchain.Backend.util.util import hash160, hash256
 import secrets
@@ -35,6 +37,10 @@ class Account:
 
         newAddr = main_prefix + hsh160
 
+        # print(f"hsh160 = {hsh160}")
+        # print(f"hsh160(integer) = {int.from_bytes(hsh160)}")
+        # print(f"hsh160(hex) = {hex(int.from_bytes(hsh160))}")
+        
         # print(f"data type of compresskey= {type(compressKey)}")        
         # print(f"compressKey = {compressKey}")        
         # print(f"data type of newAddr = {type(newAddr)}")        
@@ -46,6 +52,10 @@ class Account:
         # print(checksum)
         # print(newAddr)
 
+        # print(f"\n\n newAddr = {newAddr}")
+        # print(f"newAddr(integer) = {int.from_bytes(newAddr)}")
+        # print(f"newAddr(hex) = {hex(int.from_bytes(newAddr))} \n\n")
+        
         count = 0
 
         for c in newAddr:
@@ -59,11 +69,16 @@ class Account:
         result = ''
 
         num = int.from_bytes(newAddr, 'big')
+        
+        # print(f"newAddr (bytes) = {newAddr}")
+        # print(f"newAddr (integer) = {num}")
+        
         while num > 0:
             num, mod = divmod(num, 58)
             result = BASE58_ALPHABET[mod] + result
         
         PublicAddress = prefix + result
+        
         print(f"private Key = {privateKey}")
         print(f"public Key = {PublicAddress}")
 
