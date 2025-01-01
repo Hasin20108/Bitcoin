@@ -3,6 +3,34 @@ import sys
 sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 
 from Blockchain.Backend.core.Script import Script
+from Blockchain.Backend.util.util import int_to_little_endian, bytes_needed, decode_base58, little_endian_to_int
+
+ZERO_HASH = b'\0' * 32
+REWARD = 50
+
+PRIVATE_KEY = '100148004313450775914438020420942045756897052415147125868790147070643848814231'
+MINER_ADDRESS = '1CVj4B3Kcbdg5q5nfAYzVAtJWnmThHGaSB'
+
+class CoinbaseTx:
+    def __init__(self, BlockHeight):
+        self.BlockHeightInLittleEndian = int_to_little_endian(BlockHeight,bytes_needed(BlockHeight))
+    
+    def CoinbaseTransaction(self):
+        prev_tx = ZERO_HASH
+        prev_index = 0xffffffff
+
+        tx_ins = []
+        tx_ins.append(TxIn(prev_tx, prev_index))
+        tx_ins[0].script_sig.cmds.append(self.BlockHeightInLittleEndian)
+
+        tx_outs = []
+        target_amount = REWARD * 100000000
+        target_h10 = decode_base58(MINER_ADDRESS)
+        target_script = Script.p2pkh_script(target_h10)
+        tx_outs.append(TxOut(amount=target_amount,script_pubkey=target_script))
+        
+        return Tx(1,tx_ins, tx_outs, 0)
+
 
 class Tx:
     def __init__(self, version, tx_ins, tx_outs, locktime):
@@ -10,6 +38,51 @@ class Tx:
         self.tx_ins = tx_ins
         self.tx_outs = tx_outs
         self.locktime = locktime
+    
+    def is_coinbase(self):
+        # exactly one input
+        # first input prev_tx is b'\x00' * 32
+        # first input prev_index is 0xffffffff
+
+        if len(self.tx_ins) != 1:
+            return False
+        
+        first_input = self.tx_ins[0]
+
+        if first_input.prev_tx != b'\x00' * 32:
+            return False
+        if first_input.prev_index != 0xffffffff:
+            return False
+        
+        return True
+    
+    def to_dict(self):
+        """
+        Convert Coinbase Transaction 
+        # convert prev_tx Hash in hex from bytes
+        # Convert BlockHeight in hex which is stored in Script signature
+
+        """
+
+        if self.is_coinbase():
+            self.tx_ins[0].prev_tx = self.tx_ins[0].prev_tx.hex()
+            self.tx_ins[0].script_sig.cmds[0] = little_endian_to_int(self.tx_ins[0].script_sig.cmds[0])
+            self.tx_ins[0].script_sig = self.tx_ins[0].script_sig.__dict__
+
+        self.tx_ins[0] = self.tx_ins[0].__dict__
+
+        """
+        Convert Transaction output to dict
+        # if there is number we do not need to do anything
+        # if values is in bytes, convert it to hex
+        # Loop Through all the TxOut Objects and convert them into dict
+        """
+
+        self.tx_outs[0].script_pubkey.cmds[2] = self.tx_outs[0].script_pubkey.cmds[2].hex()
+        self.tx_outs[0].script_pubkey = self.tx_outs[0].script_pubkey.__dict__
+        self.tx_outs[0] = self.tx_outs[0].__dict__
+
+        return self.__dict__
 
 class TxIn:
     def __init__(self, prev_tx, prev_index, script_sig = None, sequence = 0xffffffff):
@@ -28,3 +101,10 @@ class TxOut:
         self.amount = amount
         self.script_pubkey = script_pubkey
     
+
+# if __name__ == '__main__':
+#     coinbaseInstance = CoinbaseTx(0)
+#     coinbaseTx = coinbaseInstance.CoinbaseTransaction()
+#     print(coinbaseTx)
+#     print('\n')
+#     print(coinbaseTx.to_dict())
