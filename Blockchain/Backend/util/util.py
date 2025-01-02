@@ -1,6 +1,6 @@
 import sys
-# sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
-sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
+sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+# sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 
 import hashlib
 from Crypto.Hash import RIPEMD160

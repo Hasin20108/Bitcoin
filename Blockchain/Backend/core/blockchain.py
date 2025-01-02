@@ -1,6 +1,6 @@
 import sys
-# sys.path.append('c:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
-sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
+sys.path.append('c:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+# sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 
 
 from Blockchain.Backend.core.block import Block
