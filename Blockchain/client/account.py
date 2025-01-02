@@ -2,6 +2,7 @@ import sys
 sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
 # sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 
+from Blockchain.Backend.core.database.database import AccountDB
 from Blockchain.Backend.core.EllepticCurve.EllepticCurve import Sha256Point
 from Blockchain.Backend.util.util import hash160, hash256
 import secrets
@@ -14,9 +15,9 @@ class Account:
 
         G = Sha256Point(Gx, Gy)
 
-        privateKey = secrets.randbits(256)
+        self.privateKey = secrets.randbits(256)
 
-        unCompressedPublicKey = privateKey * G
+        unCompressedPublicKey = self.privateKey * G
         xpoint = unCompressedPublicKey.x
         ypoint = unCompressedPublicKey.y
 
@@ -77,11 +78,12 @@ class Account:
             num, mod = divmod(num, 58)
             result = BASE58_ALPHABET[mod] + result
         
-        PublicAddress = prefix + result
+        self.PublicAddress = prefix + result
         
-        print(f"private Key = {privateKey}")
-        print(f"public Key = {PublicAddress}")
+        print(f"private Key = {self.privateKey}")
+        print(f"public Key = {self.PublicAddress}")
 
 if __name__ == '__main__':
     account = Account()
     account.createKeys()
+    AccountDB().write([account.__dict__])
