@@ -1,6 +1,6 @@
 import sys
-sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
-# sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
+# sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 
 from Blockchain.Backend.core.Script import Script
 from Blockchain.Backend.util.util import int_to_little_endian, bytes_needed, decode_base58, little_endian_to_int, encode_varint, hash256
@@ -10,6 +10,8 @@ REWARD = 50
 
 PRIVATE_KEY = '100148004313450775914438020420942045756897052415147125868790147070643848814231'
 MINER_ADDRESS = '1CVj4B3Kcbdg5q5nfAYzVAtJWnmThHGaSB'
+
+SIGHASH_ALL = 1
 
 class CoinbaseTx:
     def __init__(self, BlockHeight):

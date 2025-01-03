@@ -1,7 +1,7 @@
 import sys
 
-sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
-# sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
+# sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 from Blockchain.Backend.util.util import decode_base58
 from Blockchain.Backend.core.Script import Script
 from Blockchain.Backend.core.Tx import Tx,TxIn,TxOut
@@ -72,12 +72,12 @@ class sendBTC:
     def prepareTxOut(self):
         TxOuts = []
         to_scriptPubkey = self.scriptPubKey(self.toAccount)
-        TxOuts.append(TxOuts(self.Amount, to_scriptPubkey))
+        TxOuts.append(TxOut(self.Amount, to_scriptPubkey))
 
         """Calculate Fee"""
         self.fee = self.COIN
         self.changeAmount = self.Total-self.Amount-self.fee
-        TxOuts.append(TxOuts(self.changeAmount, self.From_address_script_pubkey))
+        TxOuts.append(TxOut(self.changeAmount, self.From_address_script_pubkey))
 
 
         return TxOuts
@@ -100,3 +100,6 @@ class sendBTC:
             return True
         
         return False
+
+if __name__ == '__main__':
+    test = sendBTC()

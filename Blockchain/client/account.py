@@ -1,6 +1,6 @@
 import sys
-sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
-# sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
+# sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 
 from Blockchain.Backend.core.database.database import AccountDB
 from Blockchain.Backend.core.EllepticCurve.EllepticCurve import Sha256Point
@@ -86,4 +86,4 @@ class Account:
 if __name__ == '__main__':
     account = Account()
     account.createKeys()
-    AccountDB().write([account.__dict__])
+    AccountDB().write(account.__dict__)

@@ -1,6 +1,6 @@
 import sys
-sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
-# sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
+# sys.path.append('C:/Users/mdhsn/OneDrive/Desktop/Bitcoin')
+sys.path.append('c:/Users/Has/Desktop/Academic/Project/Bitcoin')
 
 from Blockchain.Backend.util.util import int_to_little_endian, encode_varint
 
