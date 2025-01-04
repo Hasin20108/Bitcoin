@@ -90,6 +90,7 @@ class Tx:
     def sign_input(self, input_index, private_key, script_pubkey):
         z = self.sigh_hash(input_index, script_pubkey)
         der = private_key.sign(z).der()
+        print(" type of der = " + type(der))
         sig = der + SIGHASH_ALL.to_bytes(1, "big")
         sec = private_key.point.sec()
         self.tx_ins[input_index].script_sig = Script([sig, sec])
@@ -178,3 +179,4 @@ class TxOut:
 if __name__ == '__main__':
     coinbaseInstance = CoinbaseTx(0)
     coinbaseTx = coinbaseInstance.CoinbaseTransaction()
+
