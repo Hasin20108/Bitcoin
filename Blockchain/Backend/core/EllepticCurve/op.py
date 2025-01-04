@@ -53,7 +53,7 @@ def op_equalverify(stack):
 
 def op_checksig(stack, z):
     
-    if len(stack) < 1:
+    if len(stack) < 2:
         return False
     
     sec_pubkey = stack.pop()
@@ -64,7 +64,6 @@ def op_checksig(stack, z):
         sig = Signature.parse(der_signature)
     except Exception as e:
         return False
-
     
     if point.verify(z, sig):
         stack.append(1)
